@@ -1,0 +1,19 @@
+.title {
+  text-align: center;
+}
+
+td {
+  border: solid 1px black;
+}
+
+.tile { 
+  height: 70px;
+  width: 70px;
+  border: solid black 1px;
+}
+
+.board {
+  display: flex;
+  flex-wrap: wrap;
+  width: 580px;
+}
