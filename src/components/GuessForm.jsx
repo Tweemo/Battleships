@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import {useDispatch} from 'react-redux'
 import {guess} from '../actions/guess'
-let totalGuesses = 0
 
 function GuessForm() {
   const dispatch = useDispatch()
@@ -27,17 +26,16 @@ function GuessForm() {
     setCoords({
       pos: ''
     })
-    totalGuesses++
   }
 
 
   return (
-  <>
+  <div className="form">
     <form onSubmit={submitHandler}>
-    <label>Guess where the ships are </label>
-    <input name='pos' type='string' onChange={changeHandler} value={coords.pos} placeholder="row, column e.g 3,5"></input>
-  </form>
-  </>
+      <label>Guess where the ships are </label>
+      <input name='pos' type='string' onChange={changeHandler} value={coords.pos} placeholder="row, column e.g 3,5"></input>
+    </form>
+  </div>
   )
 }
 
