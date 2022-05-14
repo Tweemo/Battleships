@@ -21,8 +21,9 @@ function GuessForm() {
     e.preventDefault()
     //coords.pos has to be in the form of x,y
     let splitStr = coords.pos.split(',')
-
+    console.log(splitStr)
     dispatch(guess(splitStr))
+    
     setCoords({
       pos: ''
     })
