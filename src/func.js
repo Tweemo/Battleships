@@ -1,6 +1,6 @@
-function getRandomInt() {
-  return Math.floor(Math.random() * 3)
-}
+// function getRandomInt() {
+//   return Math.floor(Math.random() * 3)
+// }
 
 export function checkEdge(ship) {
   if (ship.col === 0 && ship.row === 0) {

@@ -30,7 +30,7 @@ function Board() {
     }
     setLiveBoard(board)
     const ship1 = board[getRandomInt()]
-    const ship2 = board[getRandomInt()]
+    // const ship2 = board[getRandomInt()]
     checkEdge(ship1)
     makeShip(board, ship1)
     // console.log(ship2)
