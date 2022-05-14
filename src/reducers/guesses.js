@@ -1,14 +1,11 @@
 import { GUESS } from '../actions/guess'
 
-const guess = {
-  row: '',
-  col: '',
-}
+const guess = []
 
-export default function user(state = guess, action) {
+export default function guesses(state = guess, action) {
   switch (action.type) {
     case GUESS:
-      return { row: action.coords[0], col: action.coords[1] }
+      return guess.push({ row: action.coords[0], col: action.coords[1] }), guess
 
     default:
       return state

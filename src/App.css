@@ -16,4 +16,16 @@ td {
   display: flex;
   flex-wrap: wrap;
   width: 580px;
+  justify-content: center;
+  margin: auto;
+}
+
+.start, .form {
+  display: flex;
+  justify-content: center;
+}
+
+.shot {
+  height: 70px;
+  width: 70px;
 }
