@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Tile from './Tile'
+import { checkEdge, makeShip } from "../func";
 import '../App.css';
 
 function Board() {
@@ -7,22 +8,33 @@ function Board() {
   const [liveBoard, setLiveBoard] = useState([])
   
   let board = []
+
+  function getRandomInt() {
+    return Math.floor(Math.random() * board.length)
+  }
+
+  
   function genBoard() {
     let boardSize = 8
-
-      for (let r = 0; r < boardSize; r++) {
-        for (let c = 0; c < boardSize; c++) {
-          board.push({
-            row: r,
-            col: c,
-            isVisible: false,
-            isShip: false,
-            isClicked: false
-          })
-        }
+    
+    for (let r = 0; r < boardSize; r++) {
+      for (let c = 0; c < boardSize; c++) {
+        board.push({
+          row: r,
+          col: c,
+          isVisible: false,
+          isShip: false,
+          isClicked: false
+        })
       }
-
+    }
     setLiveBoard(board)
+    const ship1 = board[getRandomInt()]
+    const ship2 = board[getRandomInt()]
+    checkEdge(ship1)
+    makeShip(board, ship1)
+    // console.log(ship2)
+    // console.log(board[getRandomInt()])
     setGame(true)
   }
   

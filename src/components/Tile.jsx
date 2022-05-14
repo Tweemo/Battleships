@@ -5,7 +5,7 @@ function Tile(tile) {
 
   const position = tile.pos
   // console.log(tile.pos)
-  console.log(position)
+  // console.log(position)
 
 
   return (
