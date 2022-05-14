@@ -1,15 +1,20 @@
 import React from "react";
+import {useDispatch} from 'react-redux'
+import {guess} from '../actions/guess'
 import '../App.css';
 
 function Tile(tile) {
-
+  const dispatch = useDispatch()
   const position = tile.pos
-  // console.log(tile.pos)
-  // console.log(position)
-
+  let splitStr = [position.row, position.col]
+  
+  function clickHandler() {
+    dispatch(guess(splitStr))
+    console.log(tile.pos)
+  }
 
   return (
-  <div className="tile">
+  <div onClick={clickHandler} className="tile">
   {position.row}
   {position.col}
   </div>
