@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { checkEdge, makeShip } from "../func";
 import Tile from './Tile'
 import GuessForm from './GuessForm';
-import { checkEdge, makeShip } from "../func";
 import '../App.css';
 
 function Board() {
@@ -9,7 +10,8 @@ function Board() {
   const [liveBoard, setLiveBoard] = useState([])
   const [shipOne, setShipOne] = useState([])
   const [shipTwo, setShipTwo] = useState([])
-  
+  const oneGuessCoords = useSelector(state => state.oneGuess)
+
   let board = []
 
   function getRandomInt() {
@@ -26,6 +28,7 @@ function Board() {
           row: r,
           col: c,
           isShip: false,
+          isVisible: false,
           isClicked: false
         })
       }
@@ -39,6 +42,7 @@ function Board() {
     setShipTwo(makeShip(ship2))
     setLiveBoard(board)
   }
+
   return (
     <>
       <div className='start'>
@@ -47,6 +51,12 @@ function Board() {
 
       <div className="board">
         {game ? liveBoard.map((tile) => 
+        (tile.row === oneGuessCoords.row && tile.col === oneGuessCoords.col) ? 
+          (
+            tile.isVisible = true,
+            <Tile pos={tile} />
+          )
+        :
         (tile.row === shipOne[0].row && tile.col === shipOne[0].col) ?
         <Tile pos={shipOne[0]} /> 
         :

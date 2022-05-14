@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import {useDispatch} from 'react-redux'
 import {guess} from '../actions/guess'
+import {formGuess} from '../actions/oneGuess'
 
 function GuessForm() {
   const dispatch = useDispatch()
@@ -20,9 +21,10 @@ function GuessForm() {
     e.preventDefault()
     //coords.pos has to be in the form of x,y
     let splitStr = coords.pos.split(',')
-    console.log(splitStr)
-    dispatch(guess(splitStr))
-    
+    let stringsToNum = [parseInt(splitStr[0]), parseInt(splitStr[1])]
+    dispatch(guess(stringsToNum))
+    // diff thunk that only shows most recent?
+    dispatch(formGuess(stringsToNum))
     setCoords({
       pos: ''
     })
