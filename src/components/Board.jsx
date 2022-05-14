@@ -51,12 +51,6 @@ function Board() {
 
       <div className="board">
         {game ? liveBoard.map((tile) => 
-        (tile.row === oneGuessCoords.row && tile.col === oneGuessCoords.col) ? 
-          (
-            tile.isVisible = true,
-            <Tile pos={tile} />
-          )
-        :
         (tile.row === shipOne[0].row && tile.col === shipOne[0].col) ?
         <Tile pos={shipOne[0]} /> 
         :
@@ -68,6 +62,12 @@ function Board() {
         :
         (tile.row === shipTwo[1].row && tile.col === shipTwo[1].col) ?
         <Tile pos={shipTwo[1]} /> 
+        :
+        (tile.row === oneGuessCoords.row && tile.col === oneGuessCoords.col) ? 
+          (
+            tile.isVisible = true,
+            <Tile pos={tile} />
+          )
         :
         <Tile pos={tile} /> )
         : 
