@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { checkEdge, makeShip } from "../func";
 import Tile from './Tile'
 import GuessForm from './GuessForm';
 import '../App.css';
+import {bothShipPos} from '../actions/ships'
 
 function Board() {
   const [game, setGame] = useState(false)
@@ -11,6 +12,10 @@ function Board() {
   const [shipOne, setShipOne] = useState([])
   const [shipTwo, setShipTwo] = useState([])
   const oneGuessCoords = useSelector(state => state.oneGuess)
+  const guesses = useSelector(state => state.guesses)
+  const BothShips = useSelector(state => state.shipPos)
+  const dispatch = useDispatch()
+
 
   let board = []
 
@@ -43,10 +48,17 @@ function Board() {
     setLiveBoard(board)
   }
 
+  useEffect(() => {
+    const bothShips = [shipOne, shipTwo]
+    dispatch(bothShipPos(bothShips))
+  },[game])
+  
+  console.log(BothShips)
   return (
     <>
       <div className='start'>
         <button onClick={genBoard}>Start Game</button>
+        Guesses: {guesses.length}
       </div>
 
       <div className="board">
