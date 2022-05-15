@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { checkEdge, makeShip } from "../func";
+import { checkEdge, makeShip, shipTemp } from "../func";
 import Tile from './Tile'
 import GuessForm from './GuessForm';
 import '../App.css';
@@ -13,7 +14,8 @@ function Board() {
   const [shipTwo, setShipTwo] = useState([])
   const oneGuessCoords = useSelector(state => state.oneGuess)
   const guesses = useSelector(state => state.guesses)
-  const BothShips = useSelector(state => state.shipPos)
+  const nearestShip = useSelector(state => state.nearbyShip)
+ 
   const dispatch = useDispatch()
 
 
@@ -53,12 +55,18 @@ function Board() {
     dispatch(bothShipPos(bothShips))
   },[game])
   
-  console.log(BothShips)
   return (
     <>
       <div className='start'>
+        <div className="top-line">
         <button onClick={genBoard}>Start Game</button>
+        </div>
+        <div className="top-line">
         Guesses: {guesses.length}
+        </div>
+        <div className="top-line">
+        {shipTemp(nearestShip)}
+        </div>
       </div>
 
       <div className="board">
