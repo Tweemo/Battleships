@@ -1,3 +1,5 @@
+import React from 'react'
+
 function getRandomCornerInt() {
   return Math.floor(Math.random() * 2)
 }
@@ -31,10 +33,12 @@ export function checkEdge(ship) {
 }
 
 export function makeShip(ship) {
-  if (ship.position === 'topLeftCorner') {
-    let nearbyShip1 = { ...ship }
-    let nearbyShip2 = { ...ship }
+  let nearbyShip1 = { ...ship }
+  let nearbyShip2 = { ...ship }
+  let nearbyShip3 = { ...ship }
+  let nearbyShip4 = { ...ship }
 
+  if (ship.position === 'topLeftCorner') {
     ship.isShip = true
 
     nearbyShip1.row = 1
@@ -46,9 +50,6 @@ export function makeShip(ship) {
     randomShip.isShip = true
     return [ship, randomShip]
   } else if (ship.position === 'botLeftCorner') {
-    let nearbyShip1 = { ...ship }
-    let nearbyShip2 = { ...ship }
-
     ship.isShip = true
 
     nearbyShip1.row = 6
@@ -59,9 +60,6 @@ export function makeShip(ship) {
     randomShip.isShip = true
     return [ship, randomShip]
   } else if (ship.position === 'topRightCorner') {
-    let nearbyShip1 = { ...ship }
-    let nearbyShip2 = { ...ship }
-
     ship.isShip = true
 
     nearbyShip1.row = 1
@@ -72,9 +70,6 @@ export function makeShip(ship) {
     randomShip.isShip = true
     return [ship, randomShip]
   } else if (ship.position === 'botRightCorner') {
-    let nearbyShip1 = { ...ship }
-    let nearbyShip2 = { ...ship }
-
     ship.isShip = true
 
     nearbyShip1.row = 6
@@ -85,10 +80,6 @@ export function makeShip(ship) {
     randomShip.isShip = true
     return [ship, randomShip]
   } else if (ship.position === 'topEdge') {
-    let nearbyShip1 = { ...ship }
-    let nearbyShip2 = { ...ship }
-    let nearbyShip3 = { ...ship }
-
     ship.isShip = true
 
     nearbyShip1.row = nearbyShip1.row + 1
@@ -100,10 +91,6 @@ export function makeShip(ship) {
     randomShip.isShip = true
     return [ship, randomShip]
   } else if (ship.position === 'bottomEdge') {
-    let nearbyShip1 = { ...ship }
-    let nearbyShip2 = { ...ship }
-    let nearbyShip3 = { ...ship }
-
     ship.isShip = true
 
     nearbyShip1.row = nearbyShip1.row - 1
@@ -115,10 +102,6 @@ export function makeShip(ship) {
     randomShip.isShip = true
     return [ship, randomShip]
   } else if (ship.position === 'leftEdge') {
-    let nearbyShip1 = { ...ship }
-    let nearbyShip2 = { ...ship }
-    let nearbyShip3 = { ...ship }
-
     ship.isShip = true
 
     nearbyShip1.row = nearbyShip1.row - 1
@@ -130,10 +113,6 @@ export function makeShip(ship) {
     randomShip.isShip = true
     return [ship, randomShip]
   } else if (ship.position === 'rightEdge') {
-    let nearbyShip1 = { ...ship }
-    let nearbyShip2 = { ...ship }
-    let nearbyShip3 = { ...ship }
-
     ship.isShip = true
 
     nearbyShip1.row = nearbyShip1.row - 1
@@ -145,11 +124,6 @@ export function makeShip(ship) {
     randomShip.isShip = true
     return [ship, randomShip]
   } else {
-    let nearbyShip1 = { ...ship }
-    let nearbyShip2 = { ...ship }
-    let nearbyShip3 = { ...ship }
-    let nearbyShip4 = { ...ship }
-
     ship.isShip = true
 
     nearbyShip1.row = nearbyShip1.row - 1
@@ -161,5 +135,31 @@ export function makeShip(ship) {
     let randomShip = arrayOfShips[getRandomMiddleInt()]
     randomShip.isShip = true
     return [ship, randomShip]
+  }
+}
+
+export function checkDist(bothShips, currentShip) {
+  let distArr = []
+  bothShips.map((ship) =>
+    distArr.push(
+      Math.abs(parseInt(ship.row) - parseInt(currentShip.row)) +
+        Math.abs(parseInt(ship.col) - parseInt(currentShip.col))
+    )
+  )
+  let closestShip = Math.min(...distArr)
+  return closestShip
+}
+
+export function shipTemp(nearestShip) {
+  if (nearestShip === 0) {
+    return 'Hit'
+  } else if (nearestShip === 1 || nearestShip === 2) {
+    return 'Hot'
+  } else if (nearestShip === 3 || nearestShip === 4) {
+    return 'Warm'
+  } else if (nearestShip === '') {
+    return <></>
+  } else {
+    return 'Cold'
   }
 }
