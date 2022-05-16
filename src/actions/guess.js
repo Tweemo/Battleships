@@ -1,8 +1,8 @@
 export const GUESS = 'GUESS'
 
-export function guess(coords) {
+export function guess(pos) {
   return {
     type: GUESS,
-    coords,
+    coords: [pos.row, pos.col],
   }
 }

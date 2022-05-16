@@ -6,30 +6,30 @@ import { closestShip } from '../actions/closeShip'
 import '../App.css';
 
 function Tile(tile) {
-  const guesses = useSelector(state => state.guesses)
   const allShips = useSelector(state => state.shipPos)
   const [visible, setVisible] = useState(false)
+
+  let bothShips = []
+
+  allShips.length === 1 ? bothShips = [...allShips[0]] 
+  : allShips.length === 2 ? bothShips = [...allShips[0], ...allShips[1]] 
+  : <></>
   
   const dispatch = useDispatch()
   
   const empty = tile.pos
-  let currentShip = [empty.row, empty.col]
+  let currentShip = {row: empty.row, col: empty.col}
   
   useEffect(() => {
     if(empty.isVisible) {
       setVisible(true)
     }
   },[empty.isVisible])
-  
+
   function clickHandler() {
-    if (guesses.length === 20) {
-      alert(`That's all the guesses you have. You may continue if you like`)
-    }
     empty.isVisible = true
     setVisible(true)
     dispatch(guess(currentShip))
-
-    let bothShips = [...allShips[0], ...allShips[1]]
     dispatch(closestShip(checkDist(bothShips, empty)))
   }
 

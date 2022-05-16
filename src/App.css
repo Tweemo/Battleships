@@ -1,3 +1,7 @@
+body {
+  background-color: rgb(242, 229, 192);
+}
+
 .title {
   text-align: center;
 }
@@ -18,6 +22,12 @@ td {
   width: 580px;
   justify-content: center;
   margin: auto;
+  position: absolute;
+  top: 15%;
+  left: 34%;
+  background-color: rgb(120, 130, 223);
+  border: 2px solid black;
+  border-radius: 2%;
 }
 
 .start, .form {
@@ -32,4 +42,41 @@ td {
 
 .top-line {
   padding: 10px;
+}
+
+.message {
+  text-align: center;
+}
+
+.reset {
+  display: flex;
+  justify-content: center;
+}
+
+.number {
+  width: 70px;
+  text-align: center;
+}
+
+.vert-number {
+  /* width: 70px; */
+  height: 70px;
+  align-content: center;
+}
+
+.horizontal-number-container {
+  display: flex;
+  justify-content: center;
+}
+
+.vertical-number-container {
+  position: absolute;
+  left: 33%;
+  top: 17.5%;
+}
+
+.form {
+  position: absolute;
+  top: 75%;
+  left: 40%;
 }

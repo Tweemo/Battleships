@@ -139,6 +139,7 @@ export function makeShip(ship) {
 }
 
 export function checkDist(bothShips, currentShip) {
+  // console.log(bothShips)
   let distArr = []
   bothShips.map((ship) =>
     distArr.push(
@@ -146,7 +147,9 @@ export function checkDist(bothShips, currentShip) {
         Math.abs(parseInt(ship.col) - parseInt(currentShip.col))
     )
   )
+  // console.log(distArr)
   let closestShip = Math.min(...distArr)
+  // console.log(closestShip)
   return closestShip
 }
 
@@ -161,5 +164,40 @@ export function shipTemp(nearestShip) {
     return <></>
   } else {
     return 'Cold'
+  }
+}
+
+export function getShips(shipOne, shipTwo) {
+  if (
+    shipOne[0].isVisible === true &&
+    shipOne[1].isVisible === true &&
+    shipTwo[0].isVisible !== true &&
+    shipTwo[1].isVisible !== true
+  ) {
+    return [shipTwo]
+  } else if (
+    shipTwo[0].isVisible === true &&
+    shipTwo[1].isVisible === true &&
+    shipOne[0].isVisible !== true &&
+    shipOne[1].isVisible !== true
+  ) {
+    return [shipOne]
+  } else if (
+    shipTwo[0].isVisible === true &&
+    shipTwo[1].isVisible === true &&
+    shipOne[0].isVisible === true &&
+    shipOne[1].isVisible === true
+  ) {
+    return ['game', 'is', 'over']
+  } else {
+    return [shipOne, shipTwo]
+  }
+}
+
+export function shipCount(ships) {
+  if (ships === 2) {
+    return 'All ships still there :)'
+  } else if (ships === 1) {
+    return 'One ship down!'
   }
 }

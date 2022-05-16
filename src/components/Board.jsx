@@ -1,36 +1,38 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { checkEdge, makeShip, shipTemp } from "../func";
-import Tile from './Tile'
-import GuessForm from './GuessForm';
 import '../App.css';
+
+import { checkEdge, makeShip, shipTemp, getShips, shipCount } from "../func";
 import {bothShipPos} from '../actions/ships'
+
+import GuessForm from './GuessForm';
+import Tile from './Tile'
 
 function Board() {
   const [game, setGame] = useState(false)
   const [liveBoard, setLiveBoard] = useState([])
   const [shipOne, setShipOne] = useState([])
   const [shipTwo, setShipTwo] = useState([])
+  
   const oneGuessCoords = useSelector(state => state.oneGuess)
   const guesses = useSelector(state => state.guesses)
   const nearestShip = useSelector(state => state.nearbyShip)
- 
-  const dispatch = useDispatch()
-
+  const allShips = useSelector(state => state.shipPos)
 
   let board = []
+  const dispatch = useDispatch()
+  const numbers = ['1', '2', '3', '4', '5', '6', '7', '8']
 
   function getRandomInt() {
     return Math.floor(Math.random() * board.length)
   }
 
-  
   function genBoard() {
-    let boardSize = 8
+    let boardSize = 9
     
-    for (let r = 0; r < boardSize; r++) {
-      for (let c = 0; c < boardSize; c++) {
+    for (let r = 1; r < boardSize; r++) {
+      for (let c = 1; c < boardSize; c++) {
         board.push({
           row: r,
           col: c,
@@ -51,10 +53,9 @@ function Board() {
   }
 
   useEffect(() => {
-    const bothShips = [shipOne, shipTwo]
-    dispatch(bothShipPos(bothShips))
-  },[game])
-  
+    game ? dispatch(bothShipPos(getShips(shipOne, shipTwo))) : <></>
+  },[guesses.length])
+
   return (
     <>
       <div className='start'>
@@ -67,6 +68,31 @@ function Board() {
         <div className="top-line">
         {shipTemp(nearestShip)}
         </div>
+        <div className="top-line">
+        {shipCount(allShips.length)}
+        </div>
+      </div>
+      <div className="horizontal-number-container">
+       {game ? numbers.map((number) => {
+        return (
+          <div className="number">
+            {number}
+          </div> )
+        })
+         : <></>
+      }
+      </div>
+
+      <div className="vertical-number-container">
+       {game ? numbers.map((number) => {
+        //  console.log(number)
+        return (
+          <div className="vert-number">
+            {number}
+          </div> )
+        })
+         : <></>
+      }
       </div>
 
       <div className="board">
@@ -92,8 +118,8 @@ function Board() {
         <Tile pos={tile} /> )
         : 
         <h1>Press Start to generate the board!</h1>}
-      {game ? <GuessForm /> : <></>}
       </div>
+      {game ? <GuessForm className='form'/> : <></>}
     </>
   )
 }

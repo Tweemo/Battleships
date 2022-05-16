@@ -1,8 +1,8 @@
 export const FORM_GUESS = 'FORM_GUESS'
 
-export function formGuess(coords) {
+export function formGuess(pos) {
   return {
     type: FORM_GUESS,
-    coords,
+    coords: [pos.row, pos.col],
   }
 }
