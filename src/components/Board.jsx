@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import '../App.css';
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import '../App.css';
 
 import { checkEdge, makeShip, shipTemp, getShips, shipCount } from "../func";
 import {bothShipPos} from '../actions/ships'
@@ -38,7 +38,6 @@ function Board() {
           col: c,
           isShip: false,
           isVisible: false,
-          isClicked: false
         })
       }
     }
@@ -85,7 +84,6 @@ function Board() {
 
       <div className="vertical-number-container">
        {game ? numbers.map((number) => {
-        //  console.log(number)
         return (
           <div className="vert-number">
             {number}

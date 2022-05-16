@@ -1,21 +1,21 @@
+import '../App.css';
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import { guess } from '../actions/guess'
+
 import { checkDist } from "../func";
+
+import { guess } from '../actions/guess'
 import { closestShip } from '../actions/closeShip'
-import '../App.css';
 
 function Tile(tile) {
+  const dispatch = useDispatch()
   const allShips = useSelector(state => state.shipPos)
   const [visible, setVisible] = useState(false)
 
   let bothShips = []
-
   allShips.length === 1 ? bothShips = [...allShips[0]] 
   : allShips.length === 2 ? bothShips = [...allShips[0], ...allShips[1]] 
   : <></>
-  
-  const dispatch = useDispatch()
   
   const empty = tile.pos
   let currentShip = {row: empty.row, col: empty.col}

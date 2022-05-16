@@ -139,7 +139,6 @@ export function makeShip(ship) {
 }
 
 export function checkDist(bothShips, currentShip) {
-  // console.log(bothShips)
   let distArr = []
   bothShips.map((ship) =>
     distArr.push(
@@ -147,9 +146,7 @@ export function checkDist(bothShips, currentShip) {
         Math.abs(parseInt(ship.col) - parseInt(currentShip.col))
     )
   )
-  // console.log(distArr)
   let closestShip = Math.min(...distArr)
-  // console.log(closestShip)
   return closestShip
 }
 
