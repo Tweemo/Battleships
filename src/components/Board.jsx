@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import '../App.css';
+import { VStack, SimpleGrid, Button } from '@chakra-ui/react'
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -19,15 +19,14 @@ function Board() {
   const guesses = useSelector(state => state.guesses)
   const nearestShip = useSelector(state => state.nearbyShip)
   const allShips = useSelector(state => state.shipPos)
-
+  
   let board = []
   const dispatch = useDispatch()
   const numbers = ['1', '2', '3', '4', '5', '6', '7', '8']
-
+  
   function getRandomInt() {
     return Math.floor(Math.random() * board.length)
   }
-
   function genBoard() {
     let boardSize = 9
     
@@ -56,21 +55,22 @@ function Board() {
   },[guesses.length])
 
   return (
-    <>
-      <div className='start'>
+    <VStack w="full" h="full" p={5} spacing={5}>
         <div className="top-line">
-        <button onClick={genBoard}>Start Game</button>
+        <Button onClick={genBoard}>Start Game</Button>
         </div>
+      <div className='start'>
         <div className="top-line">
         Guesses: {guesses.length}
         </div>
         <div className="top-line">
-        {shipTemp(nearestShip)}
+        Proximity: {shipTemp(nearestShip)}
         </div>
         <div className="top-line">
-        {shipCount(allShips.length)}
+        Ships Remaining: {shipCount(allShips.length)}
         </div>
       </div>
+
       <div className="horizontal-number-container">
        {game ? numbers.map((number) => {
         return (
@@ -82,18 +82,7 @@ function Board() {
       }
       </div>
 
-      <div className="vertical-number-container">
-       {game ? numbers.map((number) => {
-        return (
-          <div className="vert-number">
-            {number}
-          </div> )
-        })
-         : <></>
-      }
-      </div>
-
-      <div className="board">
+      <SimpleGrid bg='blue.200' columns={8} columnGap={1} rowGap={1}>
         {game ? liveBoard.map((tile) => 
         (tile.row === shipOne[0].row && tile.col === shipOne[0].col) ?
         <Tile pos={shipOne[0]} /> 
@@ -115,10 +104,11 @@ function Board() {
         :
         <Tile pos={tile} /> )
         : 
-        <h1>Press Start to generate the board!</h1>}
-      </div>
+        <></>
+      }
+      </SimpleGrid>
       {game ? <GuessForm className='form'/> : <></>}
-    </>
+    </VStack>
   )
 }
 

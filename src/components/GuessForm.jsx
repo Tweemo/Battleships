@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
+import { VStack, Input } from "@chakra-ui/react";
 
 import { checkDist } from "../func";
 
@@ -45,12 +46,12 @@ function GuessForm() {
     }
   }
   return (
-    <div className="form">
+    <VStack className="form">
       <form onSubmit={submitHandler}>
-        <label>Guess where the ships are </label>
-        <input name='pos' type='text' onChange={changeHandler} value={coords.pos} placeholder="row, column e.g 3,5"></input>
+      {/* <FormControl onSubmit={submitHandler}> */}
+        <Input variant='filled' name='pos' type='text' onChange={changeHandler} value={coords.pos} placeholder="row, column e.g 3,5"></Input>
       </form>
-    </div>
+    </VStack>
   )
 }
 

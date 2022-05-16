@@ -7,6 +7,7 @@ import thunk from 'redux-thunk'
 import reducers from './reducers'
 import App from '../src/components/App'
 import reportWebVitals from './reportWebVitals'
+import { ChakraProvider } from '@chakra-ui/react'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
@@ -16,11 +17,13 @@ const store = configureStore({
 })
 
 root.render(
-  <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </Provider>
+  <ChakraProvider>
+    <Provider store={store}>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </Provider>
+  </ChakraProvider>
 )
 
 // If you want to start measuring performance in your app, pass a function

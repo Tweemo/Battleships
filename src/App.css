@@ -1,29 +1,12 @@
-body {
-  background-color: rgb(242, 229, 192);
-}
-
-.title, .message {
+.message {
   text-align: center;
 }
 
 .tile { 
-  height: 70px;
-  width: 70px;
+  height: 4vw;
+  width: 4vw;
   border: solid black 1px;
-}
-
-.board {
-  display: flex;
-  flex-wrap: wrap;
-  width: 580px;
-  justify-content: center;
-  margin: auto;
-  position: absolute;
-  top: 15%;
-  left: 34%;
-  background-color: rgb(120, 130, 223);
-  border: 2px solid black;
-  border-radius: 2%;
+  border-radius: 5%;
 }
 
 .start, .form, .reset, .horizontal-number-container {
@@ -31,15 +14,9 @@ body {
   justify-content: center;
 }
 
-.form {
-  position: absolute;
-  top: 75%;
-  left: 40%;
-}
-
 .shot {
-  height: 70px;
-  width: 70px;
+  height: 4vw;
+  width: 4vw;
 }
 
 .top-line {
@@ -47,17 +24,6 @@ body {
 }
 
 .number {
-  width: 70px;
+  width: 4vw;
   text-align: center;
-}
-
-.vert-number {
-  height: 70px;
-  align-content: center;
-}
-
-.vertical-number-container {
-  position: absolute;
-  left: 33%;
-  top: 17.5%;
 }

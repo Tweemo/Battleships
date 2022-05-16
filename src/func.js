@@ -193,8 +193,8 @@ export function getShips(shipOne, shipTwo) {
 
 export function shipCount(ships) {
   if (ships === 2) {
-    return 'All ships still there :)'
+    return '2'
   } else if (ships === 1) {
-    return 'One ship down!'
+    return '1'
   }
 }
