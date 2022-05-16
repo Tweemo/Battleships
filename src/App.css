@@ -2,12 +2,8 @@ body {
   background-color: rgb(242, 229, 192);
 }
 
-.title {
+.title, .message {
   text-align: center;
-}
-
-td {
-  border: solid 1px black;
 }
 
 .tile { 
@@ -30,9 +26,15 @@ td {
   border-radius: 2%;
 }
 
-.start, .form {
+.start, .form, .reset, .horizontal-number-container {
   display: flex;
   justify-content: center;
+}
+
+.form {
+  position: absolute;
+  top: 75%;
+  left: 40%;
 }
 
 .shot {
@@ -44,39 +46,18 @@ td {
   padding: 10px;
 }
 
-.message {
-  text-align: center;
-}
-
-.reset {
-  display: flex;
-  justify-content: center;
-}
-
 .number {
   width: 70px;
   text-align: center;
 }
 
 .vert-number {
-  /* width: 70px; */
   height: 70px;
   align-content: center;
-}
-
-.horizontal-number-container {
-  display: flex;
-  justify-content: center;
 }
 
 .vertical-number-container {
   position: absolute;
   left: 33%;
   top: 17.5%;
-}
-
-.form {
-  position: absolute;
-  top: 75%;
-  left: 40%;
 }

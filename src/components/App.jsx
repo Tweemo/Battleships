@@ -1,6 +1,6 @@
+import { useSelector } from 'react-redux'
 import '../App.css';
 import Board from './Board'
-import { useSelector } from 'react-redux'
 
 
 function App() {
