@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { VStack, SimpleGrid, Button } from '@chakra-ui/react'
+import { VStack, SimpleGrid, Button, Heading, Text, GridItem } from '@chakra-ui/react'
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -15,10 +15,18 @@ function Board() {
   const [shipOne, setShipOne] = useState([])
   const [shipTwo, setShipTwo] = useState([])
   
-  const oneGuessCoords = useSelector(state => state.oneGuess)
   const guesses = useSelector(state => state.guesses)
   const nearestShip = useSelector(state => state.nearbyShip)
   const allShips = useSelector(state => state.shipPos)
+
+  let shipObj = []
+
+  allShips.map((ship) => {
+    if (ship.isVisible !== true) {
+      shipObj.push(ship)
+    }
+    return 'Ships working'
+  })
   
   let board = []
   const dispatch = useDispatch()
@@ -37,6 +45,7 @@ function Board() {
           col: c,
           isShip: false,
           isVisible: false,
+          id: Math.floor(Math.random() * 1000000) 
         })
       }
     }
@@ -50,62 +59,75 @@ function Board() {
     setLiveBoard(board)
   }
 
+  function resetGame() {
+    window.location.reload()
+  }
+
   useEffect(() => {
-    game ? dispatch(bothShipPos(getShips(shipOne, shipTwo))) : <></>
-  },[guesses.length])
+    game ? 
+    dispatch(bothShipPos(getShips(shipOne, shipTwo))) 
+    : <></>
+  },[liveBoard, guesses.length])
 
   return (
-    <VStack w="full" h="full" p={5} spacing={5}>
-        <div className="top-line">
-        <Button onClick={genBoard}>Start Game</Button>
+    <VStack w="full" h="full" p={5}>
+        <div>
+          <Button onClick={genBoard}>Start Game</Button>
+          <Button onClick={resetGame}>Reset</Button>
         </div>
       <div className='start'>
         <div className="top-line">
-        Guesses: {guesses.length}
+        Guesses remaining: {20 - guesses.length}
         </div>
         <div className="top-line">
         Proximity: {shipTemp(nearestShip)}
         </div>
         <div className="top-line">
-        Ships Remaining: {shipCount(allShips.length)}
+        Ships Remaining: {shipCount(shipObj.length)}
         </div>
       </div>
 
       <div className="horizontal-number-container">
        {game ? numbers.map((number) => {
         return (
-          <div className="number">
+          <Text p={{base: 4, md: 5}} w={{base: '3vh', md: '4vw'}} h={{base: '4vh', md: '4vw'}}>
             {number}
-          </div> )
+          </Text> )
         })
          : <></>
       }
       </div>
 
-      <SimpleGrid bg='blue.200' columns={8} columnGap={1} rowGap={1}>
+      <SimpleGrid  columns={8} columnGap={1} rowGap={1}>
         {game ? liveBoard.map((tile) => 
         (tile.row === shipOne[0].row && tile.col === shipOne[0].col) ?
-        <Tile pos={shipOne[0]} /> 
+        <Tile key={tile.id} pos={shipOne[0]} /> 
         :
         (tile.row === shipOne[1].row && tile.col === shipOne[1].col) ?
-        <Tile pos={shipOne[1]} /> 
+        <Tile key={tile.id} pos={shipOne[1]} /> 
         :
         (tile.row === shipTwo[0].row && tile.col === shipTwo[0].col) ?
-        <Tile pos={shipTwo[0]} /> 
+        <Tile key={tile.id} pos={shipTwo[0]} /> 
         :
         (tile.row === shipTwo[1].row && tile.col === shipTwo[1].col) ?
-        <Tile pos={shipTwo[1]} /> 
+        <Tile key={tile.id} pos={shipTwo[1]} /> 
         :
-        (tile.row === oneGuessCoords.row && tile.col === oneGuessCoords.col) ? 
-          (
-            tile.isVisible = true,
-            <Tile pos={tile} />
-          )
-        :
-        <Tile pos={tile} /> )
+        <Tile key={tile.id} pos={tile} /> 
+        )
         : 
-        <></>
-      }
+        <GridItem colSpan={8}>
+          <Heading>
+              How to play:
+          </Heading>
+          <Text fontSize='xl'>
+            <br></br>
+              You have 20 attempts to locate and sink the 2 ships on the map. 
+              <br></br>
+              After each shot, you will be able to see how close you are based on the proximity meter above.
+              <br></br>
+          </Text>
+        </GridItem>
+        }
       </SimpleGrid>
       {game ? <GuessForm className='form'/> : <></>}
     </VStack>

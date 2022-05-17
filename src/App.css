@@ -1,29 +1,18 @@
-.message {
-  text-align: center;
-}
-
 .tile { 
-  height: 4vw;
-  width: 4vw;
   border: solid black 1px;
   border-radius: 5%;
+  background-color: rgb(146, 222, 237);
 }
 
-.start, .form, .reset, .horizontal-number-container {
+.start, .form, .horizontal-number-container {
   display: flex;
   justify-content: center;
-}
-
-.shot {
-  height: 4vw;
-  width: 4vw;
 }
 
 .top-line {
   padding: 10px;
 }
 
-.number {
-  width: 4vw;
+.end {
   text-align: center;
 }

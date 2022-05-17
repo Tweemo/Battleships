@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
-import { VStack, Input } from "@chakra-ui/react";
+import { FormLabel, VStack, Input } from "@chakra-ui/react";
 
 import { checkDist } from "../func";
 
@@ -10,12 +10,7 @@ import { closestShip } from '../actions/closeShip'
 
 
 function GuessForm() {
-  const allShips = useSelector(state => state.shipPos)
-
-  let bothShips = []
-  allShips.length === 1 ? bothShips = [...allShips[0]] 
-  : allShips.length === 2 ? bothShips = [...allShips[0], ...allShips[1]] 
-  : <></>
+  const ships = useSelector(state => state.shipPos)
 
   const dispatch = useDispatch()
   const [coords, setCoords] = useState({
@@ -31,13 +26,12 @@ function GuessForm() {
 
   function submitHandler(e) {
     e.preventDefault()
-
     let splitStr = coords.pos.split(',')
     if(splitStr[0] >= 1 && splitStr[0] <= 8 && splitStr[1] >= 1 && splitStr[1] <= 8) {
       let stringsToNum = {row: parseInt(splitStr[0]), col: parseInt(splitStr[1])}
       dispatch(guess(stringsToNum))
       dispatch(formGuess(stringsToNum))
-      dispatch(closestShip(checkDist(bothShips, stringsToNum)))
+      dispatch(closestShip(checkDist(ships, stringsToNum)))
       setCoords({
         pos: ''
       })
@@ -48,7 +42,7 @@ function GuessForm() {
   return (
     <VStack className="form">
       <form onSubmit={submitHandler}>
-      {/* <FormControl onSubmit={submitHandler}> */}
+        <FormLabel>Guess where the ships are </FormLabel>
         <Input variant='filled' name='pos' type='text' onChange={changeHandler} value={coords.pos} placeholder="row, column e.g 3,5"></Input>
       </form>
     </VStack>

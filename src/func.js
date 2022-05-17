@@ -11,21 +11,21 @@ function getRandomMiddleInt() {
 }
 
 export function checkEdge(ship) {
-  if (ship.col === 0 && ship.row === 0) {
+  if (ship.col === 1 && ship.row === 1) {
     ship.position = 'topLeftCorner'
-  } else if (ship.col === 0 && ship.row === 7) {
+  } else if (ship.col === 1 && ship.row === 8) {
     ship.position = 'botLeftCorner'
-  } else if (ship.col === 7 && ship.row === 0) {
+  } else if (ship.col === 8 && ship.row === 1) {
     ship.position = 'topRightCorner'
-  } else if (ship.col === 7 && ship.row === 7) {
+  } else if (ship.col === 8 && ship.row === 8) {
     ship.position = 'botRightCorner'
-  } else if (ship.row === 0) {
+  } else if (ship.row === 1) {
     ship.position = 'topEdge'
-  } else if (ship.row === 7) {
+  } else if (ship.row === 8) {
     ship.position = 'bottomEdge'
-  } else if (ship.col === 0) {
+  } else if (ship.col === 1) {
     ship.position = 'leftEdge'
-  } else if (ship.col === 7) {
+  } else if (ship.col === 8) {
     ship.position = 'rightEdge'
   } else {
     ship.position = 'middle'
@@ -41,8 +41,8 @@ export function makeShip(ship) {
   if (ship.position === 'topLeftCorner') {
     ship.isShip = true
 
-    nearbyShip1.row = 1
-    nearbyShip2.col = 1
+    nearbyShip1.row = nearbyShip1.row + 1
+    nearbyShip2.col = nearbyShip2.col + 1
 
     let arrayOfShips = [nearbyShip1, nearbyShip2]
     let randomShip = arrayOfShips[getRandomCornerInt()]
@@ -52,8 +52,8 @@ export function makeShip(ship) {
   } else if (ship.position === 'botLeftCorner') {
     ship.isShip = true
 
-    nearbyShip1.row = 6
-    nearbyShip2.col = 1
+    nearbyShip1.row = nearbyShip1.row - 1
+    nearbyShip2.col = nearbyShip2.col + 1
 
     let arrayOfShips = [nearbyShip1, nearbyShip2]
     let randomShip = arrayOfShips[getRandomCornerInt()]
@@ -62,8 +62,8 @@ export function makeShip(ship) {
   } else if (ship.position === 'topRightCorner') {
     ship.isShip = true
 
-    nearbyShip1.row = 1
-    nearbyShip2.col = 6
+    nearbyShip1.row = nearbyShip1.row + 1
+    nearbyShip2.col = nearbyShip2.col - 1
 
     let arrayOfShips = [nearbyShip1, nearbyShip2]
     let randomShip = arrayOfShips[getRandomCornerInt()]
@@ -72,8 +72,8 @@ export function makeShip(ship) {
   } else if (ship.position === 'botRightCorner') {
     ship.isShip = true
 
-    nearbyShip1.row = 6
-    nearbyShip2.col = 6
+    nearbyShip1.row = nearbyShip1.row - 1
+    nearbyShip2.col = nearbyShip2.col - 1
 
     let arrayOfShips = [nearbyShip1, nearbyShip2]
     let randomShip = arrayOfShips[getRandomCornerInt()]
@@ -140,6 +140,7 @@ export function makeShip(ship) {
 
 export function checkDist(bothShips, currentShip) {
   let distArr = []
+  console.log(bothShips)
   bothShips.map((ship) =>
     distArr.push(
       Math.abs(parseInt(ship.row) - parseInt(currentShip.row)) +
@@ -171,30 +172,32 @@ export function getShips(shipOne, shipTwo) {
     shipTwo[0].isVisible !== true &&
     shipTwo[1].isVisible !== true
   ) {
-    return [shipTwo]
+    return [...shipTwo]
   } else if (
     shipTwo[0].isVisible === true &&
     shipTwo[1].isVisible === true &&
     shipOne[0].isVisible !== true &&
     shipOne[1].isVisible !== true
   ) {
-    return [shipOne]
+    return [...shipOne]
   } else if (
     shipTwo[0].isVisible === true &&
     shipTwo[1].isVisible === true &&
     shipOne[0].isVisible === true &&
     shipOne[1].isVisible === true
   ) {
-    return ['game', 'is', 'over']
+    return ['you', 'found', 'all', 'the', 'ships']
   } else {
-    return [shipOne, shipTwo]
+    return [...shipOne, ...shipTwo]
   }
 }
 
 export function shipCount(ships) {
-  if (ships === 2) {
+  if (ships === 4 || ships === 3) {
     return '2'
-  } else if (ships === 1) {
+  } else if (ships === 1 || ships === 2) {
     return '1'
+  } else {
+    return '0'
   }
 }

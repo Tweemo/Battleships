@@ -3,40 +3,48 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 
 import { checkDist } from "../func";
+import { Box, Image } from '@chakra-ui/react'
+
 
 import { guess } from '../actions/guess'
 import { closestShip } from '../actions/closeShip'
 
 function Tile(tile) {
   const dispatch = useDispatch()
-  const allShips = useSelector(state => state.shipPos)
+  const ships = useSelector(state => state.shipPos)
+  const formGuess = useSelector(state => state.oneGuess)
   const [visible, setVisible] = useState(false)
-
-  let bothShips = []
-  allShips.length === 1 ? bothShips = [...allShips[0]] 
-  : allShips.length === 2 ? bothShips = [...allShips[0], ...allShips[1]] 
-  : <></>
   
   const empty = tile.pos
   let currentShip = {row: empty.row, col: empty.col}
-  
+
   useEffect(() => {
-    if(empty.isVisible) {
+    if(formGuess.row === empty.row && formGuess.col === empty.col) {
+      empty.isVisible = true
       setVisible(true)
     }
-  },[empty.isVisible])
+  },[formGuess.row, formGuess.col, empty])
 
   function clickHandler() {
-    empty.isVisible = true
     setVisible(true)
+    empty.isVisible = true
     dispatch(guess(currentShip))
-    dispatch(closestShip(checkDist(bothShips, empty)))
+    console.log(ships)
+    dispatch(closestShip(checkDist(ships, empty)))
   }
 
   return (
-  <div onClick={clickHandler} className="tile">
-    {visible && empty.isShip === true ? <img className='shot' alt='hit' src="/red-circle.png"/> : visible && empty.isShip === false ? <img className='shot' alt='miss' src="/black-circle.png"/> : <></>}
-  </div>
+  <Box w={{base: '4vh', md: '4vw'}} h={{base: '4vh', md: '4vw'}} onClick={clickHandler} className='tile'>
+    {(visible && empty.isShip)
+    ? 
+    <Image w={{base: '4vh', md: '4vw'}} h={{base: '4vh', md: '4vw'}} className='shot' alt='hit' src="/red-circle.png"/> 
+    : 
+    (visible && !empty.isShip)
+    ? 
+    <Image w={{base: '4vh', md: '4vw'}} h={{base: '4vh', md: '4vw'}} className='shot' alt='miss' src="/black-circle.png"/> 
+    : <></>
+    }
+  </Box>
   )
 }
 
