@@ -140,7 +140,6 @@ export function makeShip(ship) {
 
 export function checkDist(bothShips, currentShip) {
   let distArr = []
-  console.log(bothShips)
   bothShips.map((ship) =>
     distArr.push(
       Math.abs(parseInt(ship.row) - parseInt(currentShip.row)) +

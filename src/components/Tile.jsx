@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { checkDist } from "../func";
 import { Box, Image } from '@chakra-ui/react'
 
-
 import { guess } from '../actions/guess'
 import { closestShip } from '../actions/closeShip'
 
@@ -29,7 +28,6 @@ function Tile(tile) {
     setVisible(true)
     empty.isVisible = true
     dispatch(guess(currentShip))
-    console.log(ships)
     dispatch(closestShip(checkDist(ships, empty)))
   }
 

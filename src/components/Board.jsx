@@ -19,8 +19,11 @@ function Board() {
   const nearestShip = useSelector(state => state.nearbyShip)
   const allShips = useSelector(state => state.shipPos)
 
-  let shipObj = []
+  function resetGame() {
+    window.location.reload()
+  }
 
+  let shipObj = []
   allShips.map((ship) => {
     if (ship.isVisible !== true) {
       shipObj.push(ship)
@@ -35,6 +38,7 @@ function Board() {
   function getRandomInt() {
     return Math.floor(Math.random() * board.length)
   }
+
   function genBoard() {
     let boardSize = 9
     
@@ -57,10 +61,6 @@ function Board() {
     setShipOne(makeShip(ship1))
     setShipTwo(makeShip(ship2))
     setLiveBoard(board)
-  }
-
-  function resetGame() {
-    window.location.reload()
   }
 
   useEffect(() => {
@@ -86,7 +86,6 @@ function Board() {
         Ships Remaining: {shipCount(shipObj.length)}
         </div>
       </div>
-
       <div className="horizontal-number-container">
        {game ? numbers.map((number) => {
         return (
@@ -97,7 +96,6 @@ function Board() {
          : <></>
       }
       </div>
-
       <SimpleGrid  columns={8} columnGap={1} rowGap={1}>
         {game ? liveBoard.map((tile) => 
         (tile.row === shipOne[0].row && tile.col === shipOne[0].col) ?
@@ -124,6 +122,8 @@ function Board() {
               You have 20 attempts to locate and sink the 2 ships on the map. 
               <br></br>
               After each shot, you will be able to see how close you are based on the proximity meter above.
+              <br></br>
+              That map will have TWO 1x2 ships.
               <br></br>
           </Text>
         </GridItem>
