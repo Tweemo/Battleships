@@ -1,16 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { VStack, SimpleGrid, Button, Heading, Text, GridItem } from '@chakra-ui/react'
+import { VStack, SimpleGrid, Button, Text, } from '@chakra-ui/react'
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { checkEdge, makeShip, shipTemp, getShips, shipCount } from "../func";
+import { checkEdge, makeShip, shipTemp, getShips, shipCount } from "../funcs/func";
 import {bothShipPos} from '../actions/ships'
 
 import GuessForm from './GuessForm';
 import Tile from './Tile'
+import { startGame } from '../actions/gameState';
+import { setBoard } from '../actions/board';
 
 function Board() {
-  const [game, setGame] = useState(false)
+  // const [game, setGame] = useState(false)
   const [liveBoard, setLiveBoard] = useState([])
   const [shipOne, setShipOne] = useState([])
   const [shipTwo, setShipTwo] = useState([])
@@ -18,11 +20,21 @@ function Board() {
   const guesses = useSelector(state => state.guesses)
   const nearestShip = useSelector(state => state.nearbyShip)
   const allShips = useSelector(state => state.shipPos)
+  const game = useSelector(state => state.gameState)
+  const board = useSelector(state => state.board[0])
 
   function resetGame() {
     window.location.reload()
   }
 
+  useEffect(() => {
+    dispatch(startGame(true))
+  },[])
+  
+  useEffect(() => {
+    console.log(board)
+  })
+  
   let shipObj = []
   allShips.map((ship) => {
     if (ship.isVisible !== true) {
@@ -30,8 +42,7 @@ function Board() {
     }
     return 'Ships working'
   })
-  
-  let board = []
+
   const dispatch = useDispatch()
   const numbers = ['1', '2', '3', '4', '5', '6', '7', '8']
   
@@ -39,40 +50,43 @@ function Board() {
     return Math.floor(Math.random() * board.length)
   }
 
-  function genBoard() {
-    let boardSize = 9
-    
-    for (let r = 1; r < boardSize; r++) {
-      for (let c = 1; c < boardSize; c++) {
-        board.push({
-          row: r,
-          col: c,
-          isShip: false,
-          isVisible: false,
-          id: Math.floor(Math.random() * 1000000) 
-        })
-      }
-    }
-    setGame(true)
+  function addShips() {
     const ship1 = board[getRandomInt()]
     const ship2 = board[getRandomInt()]
     checkEdge(ship1)
     checkEdge(ship2)
-    setShipOne(makeShip(ship1))
-    setShipTwo(makeShip(ship2))
-    setLiveBoard(board)
-  }
 
-  useEffect(() => {
-    game ? 
-    dispatch(bothShipPos(getShips(shipOne, shipTwo))) 
-    : <></>
-  },[liveBoard, guesses.length])
+    const arrShips = [...makeShip(ship1), ...makeShip(ship2)]
+
+    // Once ships are created, map through the current board and add the ships in,
+    // then dispatch the new board to the store.
+    // this means that the board will be updated with the ships.
+    // theoretically this means we dont need to have extra code when mapping throug hthe board further down. 
+    board.map(tile => {
+      arrShips.map(ship => {
+        if (ship.row === tile.row && tile.col === ship.col) {
+          tile.isShip = true
+          return tile
+        }
+      return tile
+    })
+    dispatch(setBoard(board))
+  })
+}
+
+
+
+  // useEffect(() => {
+  //   game ? 
+  //   dispatch(bothShipPos(getShips(shipOne, shipTwo))) 
+  //   : <></>
+  // },[liveBoard, guesses.length])
+  // console.log(liveBoard)
 
   return (
     <VStack w="full" h="full" p={5}>
         <div>
-          <Button onClick={genBoard}>Start Game</Button>
+          <Button onClick={addShips}>Start Game</Button>
           <Button onClick={resetGame}>Reset</Button>
         </div>
       <div className='start'>
@@ -97,7 +111,7 @@ function Board() {
       }
       </div>
       <SimpleGrid  columns={8} columnGap={1} rowGap={1}>
-        {game ? liveBoard.map((tile) => 
+        {liveBoard.map((tile) => 
         (tile.row === shipOne[0].row && tile.col === shipOne[0].col) ?
         <Tile key={tile.id} pos={shipOne[0]} /> 
         :
@@ -112,21 +126,8 @@ function Board() {
         :
         <Tile key={tile.id} pos={tile} /> 
         )
-        : 
-        <GridItem colSpan={8}>
-          <Heading>
-              How to play:
-          </Heading>
-          <Text fontSize='xl'>
-            <br></br>
-              You have 20 attempts to locate and sink the 2 ships on the map. 
-              <br></br>
-              After each shot, you will be able to see how close you are based on the proximity meter above.
-              <br></br>
-              That map will have TWO 1x2 ships.
-              <br></br>
-          </Text>
-        </GridItem>
+        // : 
+        // <></>
         }
       </SimpleGrid>
       {game ? <GuessForm className='form'/> : <></>}

@@ -2,7 +2,7 @@ import '../App.css';
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 
-import { checkDist } from "../func";
+import { checkDist } from "../funcs/func";
 import { Box, Image } from '@chakra-ui/react'
 
 import { guess } from '../actions/guess'

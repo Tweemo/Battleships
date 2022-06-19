@@ -2,12 +2,11 @@ import React, { useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { FormLabel, VStack, Input } from "@chakra-ui/react";
 
-import { checkDist } from "../func";
+import { checkDist } from "../funcs/func";
 
 import {guess} from '../actions/guess'
 import {formGuess} from '../actions/oneGuess'
 import { closestShip } from '../actions/closeShip'
-
 
 function GuessForm() {
   const ships = useSelector(state => state.shipPos)
