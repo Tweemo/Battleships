@@ -12,20 +12,21 @@ import {
 import { useEffect } from "react";
 import { setBoard } from '../actions/board';
 import { useSelector, useDispatch } from "react-redux";
+import { addShips } from '../funcs/createShips';
 
 function ManualClose() {
-  const board = useSelector(state => state.board[0])
+  const board = useSelector(state => state.board)
 
   const { isOpen, onOpen, onClose } = useDisclosure()
   const dispatch = useDispatch()
-  
+
   useEffect(() => {
     onOpen()
   },[onOpen])
 
   function startGame() {
     onClose()
-    dispatch(setBoard(board))
+    dispatch(setBoard(addShips(board)))
   }
 
   return (

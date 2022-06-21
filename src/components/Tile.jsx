@@ -7,11 +7,12 @@ import { Box, Image } from '@chakra-ui/react'
 
 import { guess } from '../actions/guess'
 import { closestShip } from '../actions/closeShip'
+import { getShipPositions } from '../funcs/getShipPositions';
 
 function Tile(tile) {
   const dispatch = useDispatch()
-  const ships = useSelector(state => state.shipPos)
   const formGuess = useSelector(state => state.oneGuess)
+  const board = useSelector(state => state.board)
   const [visible, setVisible] = useState(false)
   
   const empty = tile.pos
@@ -28,7 +29,7 @@ function Tile(tile) {
     setVisible(true)
     empty.isVisible = true
     dispatch(guess(currentShip))
-    dispatch(closestShip(checkDist(ships, empty)))
+    dispatch(closestShip(checkDist(getShipPositions(board), empty)))
   }
 
   return (

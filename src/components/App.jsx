@@ -8,7 +8,6 @@ import {
 } from '@chakra-ui/react'
 import ManualClose from './Instructions';
 import GenBoard from '../funcs/genBoard';
-
 import { setBoard } from '../actions/board';
 import HomePage from './homepage';
 

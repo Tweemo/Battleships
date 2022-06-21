@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-
-let board = []
-
 export default function GenBoard() {
+  let board = []
   let boardSize = 9
 
   for (let r = 1; r < boardSize; r++) {
