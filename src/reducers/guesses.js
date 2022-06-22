@@ -1,4 +1,5 @@
 import { GUESS } from '../actions/guess'
+import { FORM_GUESS } from '../actions/formGuess'
 
 const guess = []
 
@@ -13,6 +14,10 @@ function filter(arr) {
 export default function guesses(state = guess, action) {
   switch (action.type) {
     case GUESS:
+      guess.push({ row: action.coords[0], col: action.coords[1] })
+      return filter(guess)
+
+    case FORM_GUESS:
       guess.push({ row: action.coords[0], col: action.coords[1] })
       return filter(guess)
 
