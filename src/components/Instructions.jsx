@@ -10,9 +10,10 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 import { useEffect } from "react";
-import { setBoard } from '../actions/board';
 import { useSelector, useDispatch } from "react-redux";
-import { addShips } from '../funcs/createShips';
+
+import { setBoard } from '../actions';
+import { addShips } from '../funcs';
 
 function ManualClose() {
   const board = useSelector(state => state.board)
@@ -43,7 +44,6 @@ function ManualClose() {
               That map will have TWO 1x2 ships.
               <br></br>
           </ModalBody>
-
           <ModalFooter>
             <Button onClick={startGame} colorScheme='blue' mr={3}>
               Start

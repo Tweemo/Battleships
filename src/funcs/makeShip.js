@@ -1,5 +1,3 @@
-import React from 'react'
-
 function getRandomCornerInt() {
   return Math.floor(Math.random() * 2)
 }
@@ -10,29 +8,7 @@ function getRandomMiddleInt() {
   return Math.floor(Math.random() * 4)
 }
 
-export function checkEdge(ship) {
-  if (ship.col === 1 && ship.row === 1) {
-    ship.position = 'topLeftCorner'
-  } else if (ship.col === 1 && ship.row === 8) {
-    ship.position = 'botLeftCorner'
-  } else if (ship.col === 8 && ship.row === 1) {
-    ship.position = 'topRightCorner'
-  } else if (ship.col === 8 && ship.row === 8) {
-    ship.position = 'botRightCorner'
-  } else if (ship.row === 1) {
-    ship.position = 'topEdge'
-  } else if (ship.row === 8) {
-    ship.position = 'bottomEdge'
-  } else if (ship.col === 1) {
-    ship.position = 'leftEdge'
-  } else if (ship.col === 8) {
-    ship.position = 'rightEdge'
-  } else {
-    ship.position = 'middle'
-  }
-}
-
-export function makeShip(ship) {
+export function findShipPositions(ship) {
   let nearbyShip1 = { ...ship }
   let nearbyShip2 = { ...ship }
   let nearbyShip3 = { ...ship }
@@ -135,68 +111,5 @@ export function makeShip(ship) {
     let randomShip = arrayOfShips[getRandomMiddleInt()]
     randomShip.isShip = true
     return [ship, randomShip]
-  }
-}
-
-export function checkDist(bothShips, currentShip) {
-  let distArr = []
-  bothShips.map((ship) =>
-    distArr.push(
-      Math.abs(parseInt(ship.row) - parseInt(currentShip.row)) +
-        Math.abs(parseInt(ship.col) - parseInt(currentShip.col))
-    )
-  )
-  let closestShip = Math.min(...distArr)
-  return closestShip
-}
-
-export function shipTemp(nearestShip) {
-  if (nearestShip === 0) {
-    return 'Hit'
-  } else if (nearestShip === 1 || nearestShip === 2) {
-    return 'Hot'
-  } else if (nearestShip === 3 || nearestShip === 4) {
-    return 'Warm'
-  } else if (nearestShip === '') {
-    return <></>
-  } else {
-    return 'Cold'
-  }
-}
-
-export function getShips(shipOne, shipTwo) {
-  if (
-    shipOne[0].isVisible === true &&
-    shipOne[1].isVisible === true &&
-    shipTwo[0].isVisible !== true &&
-    shipTwo[1].isVisible !== true
-  ) {
-    return [...shipTwo]
-  } else if (
-    shipTwo[0].isVisible === true &&
-    shipTwo[1].isVisible === true &&
-    shipOne[0].isVisible !== true &&
-    shipOne[1].isVisible !== true
-  ) {
-    return [...shipOne]
-  } else if (
-    shipTwo[0].isVisible === true &&
-    shipTwo[1].isVisible === true &&
-    shipOne[0].isVisible === true &&
-    shipOne[1].isVisible === true
-  ) {
-    return ['you', 'found', 'all', 'the', 'ships']
-  } else {
-    return [...shipOne, ...shipTwo]
-  }
-}
-
-export function shipCount(ships) {
-  if (ships === 4 || ships === 3) {
-    return '2'
-  } else if (ships === 1 || ships === 2) {
-    return '1'
-  } else {
-    return '0'
   }
 }

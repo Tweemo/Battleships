@@ -1,8 +1,6 @@
 import { GAME } from '../actions/gameState'
 
-let gameOn = false
-
-export default function gameState(state = gameOn, action) {
+export default function gameState(state = true, action) {
   switch (action.type) {
     case GAME:
       return action.game

@@ -1,35 +1,40 @@
 import '../App.css';
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-
-import { checkDist } from "../funcs/func";
 import { Box, Image } from '@chakra-ui/react'
 
-import { guess } from '../actions/guess'
-import { closestShip } from '../actions/closeShip'
-import { getShipPositions } from '../funcs/getShipPositions';
+import { guess, closestShip, startGame } from '../actions'
+import { getShipPositions, shipCount, checkDist } from '../funcs';
 
 function Tile(tile) {
   const dispatch = useDispatch()
-  const formGuess = useSelector(state => state.oneGuess)
+  const guesses = useSelector(state => state.guesses)
   const board = useSelector(state => state.board)
   const [visible, setVisible] = useState(false)
-  
+
   const empty = tile.pos
   let currentShip = {row: empty.row, col: empty.col}
 
   useEffect(() => {
-    if(formGuess.row === empty.row && formGuess.col === empty.col) {
+    if(guesses[guesses.length - 1]?.row === empty.row && guesses[guesses.length - 1]?.col === empty.col) {
       empty.isVisible = true
       setVisible(true)
     }
-  },[formGuess.row, formGuess.col, empty])
+  },[guesses, guesses.length, empty])
+  
+  function checkIfGameCompleted() {
+    if ((shipCount(getShipPositions(board).length)) === 0) {
+      dispatch(startGame(false))
+    } 
+    return 'Game still going'
+  }
 
   function clickHandler() {
+    dispatch(closestShip(checkDist(getShipPositions(board), empty)))
     setVisible(true)
     empty.isVisible = true
     dispatch(guess(currentShip))
-    dispatch(closestShip(checkDist(getShipPositions(board), empty)))
+    checkIfGameCompleted()
   }
 
   return (

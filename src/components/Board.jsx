@@ -3,12 +3,11 @@ import { VStack, SimpleGrid, Button, Text, } from '@chakra-ui/react'
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { shipTemp, shipCount } from "../funcs/func";
+import { shipCount, shipTemp, getShipPositions } from "../funcs";
+import { startGame } from '../actions';
 
 import GuessForm from './GuessForm';
 import Tile from './Tile'
-import { startGame } from '../actions/gameState';
-import { getShipPositions } from '../funcs/getShipPositions';
 
 function Board() {
   const guesses = useSelector(state => state.guesses)

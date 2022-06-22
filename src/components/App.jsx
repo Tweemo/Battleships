@@ -7,15 +7,15 @@ import {
   Center, 
 } from '@chakra-ui/react'
 import ManualClose from './Instructions';
-import GenBoard from '../funcs/genBoard';
-import { setBoard } from '../actions/board';
+import { createBoard } from '../funcs';
+import { setBoard } from '../actions';
 import HomePage from './homepage';
 
 function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(setBoard(GenBoard()))
+    dispatch(setBoard(createBoard()))
   },[dispatch])
 
   return (

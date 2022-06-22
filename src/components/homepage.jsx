@@ -8,8 +8,8 @@ import {
   VStack } from '@chakra-ui/react'
 
 function HomePage() {
-  const allShips = useSelector(state => state.shipPos)
   const guesses = useSelector(state => state.guesses)
+  const gameState = useSelector(state => state.gameState)
 
   function resetGame() {
     window.location.reload()
@@ -18,10 +18,10 @@ function HomePage() {
   return (
     <>
         <Flex h={{base: 'auto', md:'100vh'}} py={0}>
-          {(guesses.length <= 20 && allShips.length !== 5) 
+          {(guesses.length <= 20 && gameState === true) 
             ?
             <Board /> 
-            : (guesses.length <= 20 && allShips.length === 5) 
+            : (guesses.length <= 20 && gameState === false) 
             ? 
             <VStack w='100vw' className='end'>
               <Heading>Congratulations! You found all the ships in less than 20 guesses!</Heading>

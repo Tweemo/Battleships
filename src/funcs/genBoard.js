@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-export default function GenBoard() {
+export function createBoard() {
   let board = []
   let boardSize = 9
 

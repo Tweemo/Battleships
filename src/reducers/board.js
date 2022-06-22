@@ -1,8 +1,6 @@
 import { BOARD } from '../actions/board'
 
-const initialBoard = []
-
-export default function board(state = initialBoard, action) {
+export default function board(state = [], action) {
   switch (action.type) {
     case BOARD:
       return action.board
